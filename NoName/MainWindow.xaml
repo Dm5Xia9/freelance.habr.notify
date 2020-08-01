@@ -1,0 +1,80 @@
+﻿<Window x:Class="NoName.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NoName"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="499.6" Width="915.2" x:Name="ThisWindow" WindowStyle = "None">
+
+    <Window.Resources>
+
+        <!-- ItemsSource="{Binding ListBlockNew}" -->
+        <DataTemplate DataType="{x:Type local:NewBlock}">
+            <Border BorderThickness="0 0 0 1" BorderBrush="Gray">
+                <StackPanel>
+
+                    <TextBlock TextWrapping="Wrap" Margin="0,0,7.6,13.8" Foreground="#FF4F4D4D" FontFamily="Global User Interface" FontSize="14" Grid.RowSpan="2">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}">
+                                <Binding Path="NameHabrNew"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+
+                    </TextBlock>
+                    <TextBlock Margin="0,0.6,7.6,-1.2" TextAlignment="Right" Foreground="#FF4F4D4D" FontFamily="Global User Interface" FontSize="12">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}">
+                                <Binding Path="DataHabrNew"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:NewTextBlock}">
+            <TextBlock Height="300" Margin="0,0,0.2,0" TextWrapping="Wrap" Foreground="#FF4F4D4D" FontFamily="Global User Interface" FontSize="14">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0}">
+                        <Binding Path="TextBlockNew"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </DataTemplate>
+
+    </Window.Resources>
+
+    <Grid Background="#FFC0BDBD">
+        <Grid Margin="0,0,-0.2,0" Background="#FF434040" Height="16" VerticalAlignment="Top">
+            <Button Foreground="#FFE0E0E0" Content="X " FontFamily="Global User Interface" Command="{Binding CommandCloseClick}" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="18" BorderBrush="{x:Null}"/>
+            <Button Foreground="#FFE0E0E0" Content="- " FontFamily="Global User Interface" Command="{Binding CommandHideClick}" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="12" BorderBrush="{x:Null}" Margin="0,0,18,0"/>
+
+        </Grid>
+        <ListBox SelectedItem="{Binding SelectedListBox}" ItemsSource="{Binding ListNew}"  ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Name="PersonList" HorizontalContentAlignment="Stretch" Margin="10,24,546.8,9.8" Background="{x:Null}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction 
+                Command="{Binding CommandTextCreate}" CommandParameter="{Binding SelectedListBox}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction 
+                Command="{Binding CommandLink}" CommandParameter="{Binding SelectedListBox}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
+
+
+        <ItemsControl Margin="362,24,9.8,9.8" ItemsSource="{Binding ListBlockNew}" Background="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" >
+        </ItemsControl>
+        <Grid>
+            <tb:TaskbarIcon IconSource = "/Resources/FabrFriIcon.ico" ToolTipText="hello world" LeftClickCommand="{Binding MainCommandLeft}" >
+                
+            </tb:TaskbarIcon>
+        </Grid>
+
+    </Grid>
+
+
+</Window>
